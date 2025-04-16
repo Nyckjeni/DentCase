@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+
+  <!-- Fonte Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Ícones (Font Awesome para o olho) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <!-- Estilo CSS -->
+  <link rel="stylesheet" href="css/login.css" />
+
+  <link rel="manifest" href="manifest.json">
+
+</head>
+
+<body>
+  <section>
+    <div class="imgBx">
+      <img src="img/login.jpg" alt="Login Imagem" />
+    </div>
+
+    <div class="contentBx">
+      <div class="form-box">
+        <!-- Espaço para sua logo -->
+        <div class="logo-placeholder">
+            <img src="img/logo1.png" alt="Login Imagem"  class="logo"/>
+        </div>
+
+        <form id="loginForm">
+          <!-- Cargo -->
+          <div class="form-group">
+            <label for="cargo"><span>Cargo</span></label>
+            <select name="cargo" id="cargo" required>
+              <option value="">Selecione o cargo</option>
+              <option value="administrador">Administrador</option>
+              <option value="perito">Perito</option>
+              <option value="assistente">Assistente</option>
+            </select>
+          </div>
+
+          <!-- Matrícula -->
+          <div class="form-group">
+            <label for="matricula"><span>Matrícula</span></label>
+            <input type="number" name="matricula" id="matricula" placeholder="Digite sua matrícula" required />
+          </div>
+
+          <!-- Senha com ícone de olho -->
+          <div class="form-group senha-wrapper">
+            <label for="senha"><span>Senha</span></label>
+            <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required />
+            <i class="fa-solid fa-eye toggle-senha" id="toggleSenha"></i>
+          </div>
+
+          <!-- Botão de login -->
+          <div class="form-group">
+            <input type="submit" value="Entrar"  />
+          </div>
+
+          <!-- Esqueceu a senha -->
+          <div class="form-group">
+            <p>Esqueceu a senha? <a href="#">Clique aqui</a></p>
+          </div>
+
+          <!-- Mensagem de erro -->
+          <div id="mensagemErro"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- JS -->
+  <script src="js/login.js" defer></script>
+</body>
+</html>

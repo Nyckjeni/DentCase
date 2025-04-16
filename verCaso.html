@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Caso</title>
+    <link rel="stylesheet" href="css/verCaso.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-placeholder">
+                <img src="img/logo2.png" alt="Login Imagem"  class="logo"/>
+            </div>
+        </div>
+        <a href="index.html"><span class="material-symbols-outlined">home</span> Página Inicial</a>
+        <a href="listarCaso.html" class="active"><span class="material-symbols-outlined">folder</span> Casos</a>
+        <div class="dropdown-container">
+            <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+                <span class="material-symbols-outlined">group</span>
+                Gerenciamento de Usuários
+                <span class="material-symbols-outlined expand-icon">expand_more</span>
+            </button>
+            <div class="sub-menu">
+                <a href="usuarios-perito.html"><span class="material-symbols-outlined">person</span> Perito</a>
+                <a href="usuarios-assistente.html"><span class="material-symbols-outlined">person</span> Assistente</a>
+            </div>
+        </div>
+
+        <a href="login.html"><span class="material-symbols-outlined">logout</span> Sair</a>
+    </aside>
+
+    <div class="main-content">
+        <nav>
+            <h1>Dados do Caso</h1>
+        </nav>
+        <div class="container">
+            <!-- Cabeçalho do Caso -->
+            <div class="case-header">
+                <h1 id="case-title">Identificação de vítima em acidente rodoviário</h1>
+                <div class="case-meta">
+                    <span class="case-id" data-case-id="CASO-001">#CASO-001</span>
+                    <span class="case-status status-open">Em Análise</span>
+                </div>
+
+                <div class="case-details">
+                    <p><strong>Descrição:</strong> <span id="case-description">Vítima do sexo masculino, aproximadamente
+                            30 anos, com fraturas dentárias características.</span></p>
+                    <p><strong>Perito:</strong> <span id="case-expert">Dr. Silva</span></p>
+                    <p><strong>Data Abertura:</strong> <span id="case-date">15/05/2024</span></p>
+                </div>
+
+                <div class="case-actions">
+                    <button id="edit-case" class="btn btn-edit"><i class="fas fa-edit"></i> Editar</button>
+                    <button id="change-status" class="btn btn-status"><i class="fas fa-exchange-alt"></i> Alterar
+                        Status</button>
+                    <button id="generate-report" class="btn btn-report"><i class="fas fa-file-pdf"></i> Gerar
+                        Relatório</button>
+                </div>
+            </div>
+
+            <!-- Seção de Evidências -->
+            <div class="evidence-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-microscope"></i> Evidências</h2>
+                    <button id="add-evidence" class="btn btn-primary"><i class="fas fa-plus"></i> Adicionar</button>
+                </div>
+
+                <div class="evidence-list">
+                    <!-- Mensagem quando não há evidências -->
+                    <div class="empty-evidence-message" id="empty-evidence-message">
+                        <h3>Nenhuma evidência cadastrada</h3>
+                        <p>Clique no botão "Adicionar" para registrar uma nova evidência</p>
+                    </div>
+
+                    <!-- As evidências serão adicionadas aqui dinamicamente via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar evidência -->
+    <div id="evidence-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Adicionar Nova Evidência</h2>
+            <form id="evidence-form">
+                <input type="hidden" id="evidence-case-id" value="CASO-001">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="evidence-type">Tipo:</label>
+                        <select id="evidence-type" required>
+                            <option value="">Selecione...</option>
+                            <option value="fotografia">Fotografia</option>
+                            <option value="raio-x">Raio-X</option>
+                            <option value="documento">Documento</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="collection-date">Data da coleta:</label>
+                        <input type="date" id="collection-date" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="collection-time">Hora:</label>
+                        <input type="time" id="collection-time" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="evidence-description">Descrição:</label>
+                    <textarea id="evidence-description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="evidence-location">Localização:</label>
+                    <div class="location-fields">
+                        <input type="text" id="evidence-lat" placeholder="Latitude" class="location-input">
+                        <input type="text" id="evidence-long" placeholder="Longitude" class="location-input">
+                        <button type="button" id="get-location" class="btn btn-location"><i
+                                class="fas fa-map-marker-alt"></i> Usar Minha Localização</button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="evidence-image-url">Imagem (URL):</label>
+                        <input type="text" id="evidence-image-url" placeholder="Opcional">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="evidence-video-url">Vídeo (URL):</label>
+                        <input type="text" id="evidence-video-url" placeholder="Opcional">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="evidence-document-url">Documento (URL):</label>
+                        <input type="text" id="evidence-document-url" placeholder="Opcional">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="evidence-file">Arquivo:</label>
+                        <input type="file" id="evidence-file">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-submit">Salvar Evidência</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para gerar laudo -->
+    <div id="report-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Gerar Laudo</h2>
+            <form id="report-form">
+                <input type="hidden" id="report-case-id" value="CASO-001">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="report-date">Data do Laudo:</label>
+                        <input type="date" id="report-date" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expert-name">Perito Responsável:</label>
+                        <input type="text" id="expert-name" value="Dr. Silva" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="report-findings">Constatações:</label>
+                    <textarea id="report-findings" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="report-conclusions">Conclusões:</label>
+                    <textarea id="report-conclusions" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-submit">Salvar Laudo</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bibliotecas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="js/verCaso.js"></script>
+
+</body>
+
+</html>

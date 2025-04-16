@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Caso</title>
+    <link rel="stylesheet" href="css/novoCaso.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-placeholder">
+                <img src="img/logo2.png" alt="Login Imagem"  class="logo"/>
+            </div>
+        </div>
+        <a href="index.html"><span class="material-symbols-outlined">home</span> Página Inicial</a>
+        <a href="listarCaso.html" class="active"><span class="material-symbols-outlined">folder</span> Casos</a>
+        <div class="dropdown-container">
+            <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+                <span class="material-symbols-outlined">group</span>
+                Gerenciamento de Usuários
+                <span class="material-symbols-outlined expand-icon">expand_more</span>
+            </button>
+            <div class="sub-menu">
+                <a href="usuarios-perito.html"><span class="material-symbols-outlined">person</span> Perito</a>
+                <a href="usuarios-assistente.html"><span class="material-symbols-outlined">person</span> Assistente</a>
+            </div>
+        </div>
+
+        <a href="login.html"><span class="material-symbols-outlined">logout</span> Sair</a>
+    </aside>
+
+    <div class="main-content">
+        <nav>
+            <h1>Lista de Casos</h1>
+        </nav>
+        <div class="container">
+            <header class="main-header">
+                <h1>Cadastrar Novo Caso</h1>
+                <a href="listarCaso.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                  </a>
+            </header>
+
+            <div class="form-container">
+                <form id="case-form" action="/api/cases" method="POST">
+                    <!-- ID gerado automaticamente -->
+                    <div class="form-group">
+                        <label for="case-id">ID do Caso</label>
+                        <input type="text" id="case-id" name="caseId" value="CASO-XXXX" readonly>
+                        <small>Gerado automaticamente pelo sistema</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="case-title">Título*</label>
+                        <input type="text" id="case-title" name="title" required
+                            placeholder="Ex: Identificação de vítima em acidente aéreo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="case-description">Descrição Detalhada do Caso*</label>
+                        <textarea id="case-description" name="description" required rows="5"
+                            placeholder="Descreva o caso com detalhes relevantes..."></textarea>
+                    </div>
+
+                    <!-- Informações do Paciente -->
+                    <h3>Informações do Paciente</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patient-name">Nome do Paciente*</label>
+                            <input type="text" id="patient-name" name="patientName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="patient-dob">Data de Nascimento*</label>
+                            <input type="date" id="patient-dob" name="patientDOB" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="patient-age">Idade*</label>
+                            <input type="number" id="patient-age" name="patientAge" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patient-gender">Gênero*</label>
+                            <select id="patient-gender" name="patientGender" required>
+                                <option value="">Selecione</option>
+                                <option value="masculino">Masculino</option>
+                                <option value="feminino">Feminino</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="patient-id">Documento de Identidade*</label>
+                            <input type="text" id="patient-id" name="patientID" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="patient-contact">Contato do Paciente</label>
+                            <input type="text" id="patient-contact" name="patientContact">
+                        </div>
+                    </div>
+
+                    <!-- Informações do Perito -->
+                    <h3>Informações do Perito</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expert-name">Nome do Perito*</label>
+                            <input type="text" id="expert-name" name="expertName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="expert-registration">Registro Profissional*</label>
+                            <input type="text" id="expert-registration" name="expertRegistration" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="expert-contact">Contato do Perito</label>
+                            <input type="text" id="expert-contact" name="expertContact">
+                        </div>
+                    </div>
+
+                    <!-- Informações do Incidente -->
+                    <h3>Informações do Incidente</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="incident-date">Data do Incidente*</label>
+                            <input type="datetime-local" id="incident-date" name="incidentDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="incident-location">Local do Incidente*</label>
+                            <input type="text" id="incident-location" name="incidentLocation" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="incident-description">Descrição do Incidente*</label>
+                        <textarea id="incident-description" name="incidentDescription" required rows="5"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="incident-weapon">Instrumento/Arma (opcional)</label>
+                        <input type="text" id="incident-weapon" name="incidentWeapon">
+                    </div>
+
+                    <!-- Status e Datas -->
+                    <h3>Status e Controle do Caso</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="case-status">Status*</label>
+                            <select id="case-status" name="status" required>
+                                <option value="em andamento">Em Andamento</option>
+                                <option value="finalizado">Finalizado</option>
+                                <option value="arquivado">Arquivado</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="case-open-date">Data de Abertura*</label>
+                            <input type="datetime-local" id="case-open-date" name="openDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="case-close-date">Data de Fechamento</label>
+                            <input type="datetime-local" id="case-close-date" name="closeDate">
+                        </div>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="form-actions">
+                        <button type="reset" class="btn btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Caso</button>
+                        <button type="button" class="btn btn-success" id="generate-report">Gerar Relatório</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+        <script>
+            function toggleSubMenu(button) {
+                const subMenu = button.nextElementSibling;
+                subMenu.style.display = subMenu.style.display === "flex" ? "none" : "flex";
+            }
+        </script>
+</body>
+
+</html>
